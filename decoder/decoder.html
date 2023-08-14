@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>png-base64-webp</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #a2d5c6; /* Pastel green */
+            text-align: center;
+            padding: 20px 0;
+        }
+        .container {
+            padding: 40px 10%;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Gap between image and button */
+            width: 300px;
+            height: 300px;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        #outputImage {
+            max-width: 100%;
+            max-height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+        }
+        #stringSize, #webpSize {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="title has-text-white">png-base64-webp</h1>
+    </header>
+    <div class="container">
+        <div class="field">
+            <label class="label" for="base64Input">Paste Base64-encoded WebP Image:</label>
+            <div class="control">
+                <textarea class="textarea" id="base64Input" oninput="displayImage()"></textarea>
+            </div>
+            <p id="stringSize">String size: 0 bytes</p>
+            <p id="webpSize">WebP size: 0 bytes</p>
+        </div>
+        <div class="image-container">
+            <img id="outputImage" alt="Decoded WebP Image" src="./assets/images/placeholder.webp" onload="handleImageLoad()" onerror="handleImageError()" />
+        </div>
+        <div class="field">
+            <button class="button is-primary" id="downloadButton" onclick="downloadImage()" disabled>
+                <span class="icon">
+                    <i class="fas fa-download"></i>
+                </span>
+                <span>Download</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function displayImage() {
+            const base64String = document.getElementById('base64Input').value;
+            const outputImage = document.getElementById('outputImage');
+            const stringSizeElement = document.getElementById('stringSize');
+            const webpSizeElement = document.getElementById('webpSize');
+
+            stringSizeElement.textContent = `String size: ${base64String.length} bytes`;
+
+            if (base64String.trim() === '') {
+                outputImage.src = './assets/images/placeholder.webp';
+            } else {
+                outputImage.src = 'data:image/webp;base64,' + base64String;
+                const webpSize = Math.round(base64String.length * 3 / 4); // Rough estimate of WebP size from Base64
+                webpSizeElement.textContent = `WebP size: ${webpSize} bytes`;
+            }
+        }
+
+        function handleImageLoad() {
+            const downloadButton = document.getElementById('downloadButton');
+            downloadButton.disabled = false;
+        }
+
+        function handleImageError() {
+            const outputImage = document.getElementById('outputImage');
+            const downloadButton = document.getElementById('downloadButton');
+            outputImage.src = './assets/images/error.webp';
+            downloadButton.disabled = true;
+        }
+
+        function downloadImage() {
+            const outputImage = document.getElementById('outputImage');
+            const link = document.createElement('a');
+            link.href = outputImage.src;
+            link.download = 'downloaded_image.webp';
+            link.click();
+        }
+    </script>
+</body>
+</html>
