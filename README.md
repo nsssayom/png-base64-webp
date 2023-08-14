@@ -216,12 +216,11 @@ def decode_base64_to_webp(base64_string, output_path):
         f.write(base64.b64decode(base64_string))
 ```
 
-
 ## Online Demo
 
-Test the generated base64 string and decode it back to a WebP image using our online demo: [github.com/nsssayom/png-base64-webp/demo.html](https://github.com/nsssayom/png-base64-webp/demo.html).
+Test the generated base64 string and decode it back to a WebP image using the online demo: [https://sayom.me/png-base64-webp](https://sayom.me/png-base64-webp/)
 
-For a hands-on example of the decoding process, refer to the script element in `<project_root>/decode/decode.html`.
+For a hands-on example of the decoding process, refer to the script element in `<project_root>/docs/index.html`.
 
 ## Notes
 
