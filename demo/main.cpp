@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "png-base64.h"
+#include "png-base64-webp.h"
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {

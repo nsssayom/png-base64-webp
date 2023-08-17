@@ -131,7 +131,7 @@ make
 sudo make install
 ```
 
-After installing the dependencies, you can include and use the `png-base64` library in your projects.
+After installing the dependencies, you can include and use the `png-base64-webp` library in your projects.
 
 ## Decoding the Base64 String
 
